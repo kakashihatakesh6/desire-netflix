@@ -2,15 +2,17 @@
 import Input from "@/components/input";
 import axios from "axios";
 import { useCallback, useState } from "react";
-import {signIn} from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
-import {FcGoogle} from 'react-icons/fc';
-import {FaGithub} from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
 
 const Auth = () => {
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState<any>()
+    const [resStaus, setResStatus] = useState(false)
 
     const [variant, setVariant] = useState('login');
 
@@ -18,39 +20,44 @@ const Auth = () => {
         setVariant((currentVariant) => currentVariant === 'login' ? 'register' : 'login')
     }, [])
 
+
     const login = useCallback(async () => {
         try {
             await signIn('credentials', {
-                email, 
-                password, 
-                redirect: false,
+                email,
+                password,
+                redirect: true,
                 callbackUrl: '/profiles'
             });
 
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }, [email, password])
 
 
     const register = useCallback(async () => {
         try {
-            await axios.post('/api/register', {
+            const newUser = await axios.post('/api/register', {
                 email,
-                name, 
+                name,
                 password
             });
-
+            const res = newUser.data;
+            console.log("New User Created!");
+            // setResStatus(true);
+            
             login();
 
         } catch (error) {
             console.log(error)
+            setError(error)
         }
 
 
     }, [email, name, password, login]);
 
-    
+
 
 
     return (
@@ -95,9 +102,9 @@ const Auth = () => {
                             {variant === 'login' ? 'Login' : 'Register'}
                         </button>
                         <div className="flex flex-row items-center gap-4 mt-8 justify-center">
-                                <div 
+                            <div
                                 onClick={() => signIn('google', { callbackUrl: '/profiles' })}
-                                    className="
+                                className="
                                     w-10
                                     h-10
                                     bg-white
@@ -109,10 +116,10 @@ const Auth = () => {
                                     hover:opacity-80
                                     trasition
                                 ">
-                                    <FcGoogle size={30}/>
-                                </div>
+                                <FcGoogle size={30} />
+                            </div>
 
-                                <div 
+                            <div
                                 onClick={() => signIn('github', { callbackUrl: '/profiles' })}
                                 className="
                                     w-10
@@ -126,15 +133,26 @@ const Auth = () => {
                                     hover:opacity-80
                                     trasition
                                 ">
-                                    <FaGithub size={30}/>
-                                </div>
+                                <FaGithub size={30} />
+                            </div>
                         </div>
+                        {/* {error &&
+                            <p className="text-red-300 py-1 w-full justify-center flex">{variant === 'login' ? 'Please Enter the Right Credentials!' : 'User Already Exists!'}</p>
+                        }
+                        {resStaus &&
+                            <p className="text-red-300 py-1 w-full justify-center flex">User Registered Successfully!</p>
+                        } */}
+
                         <p className="text-neutral-500 mt-12">
-                            { variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}
+                            {variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}
                             <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">
-                            { variant === 'login' ? 'Create an account' : 'Login'}
+                                {variant === 'login' ? 'Create an account' : 'Login'}
                             </span>
                         </p>
+
+
+
+
                     </div>
                 </div>
             </div>

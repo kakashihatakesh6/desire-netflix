@@ -6,10 +6,9 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const Watch = () => {
     const router = useRouter();
+    const { movieid } = router.query;
 
-    const { movieId } = router.query;
-
-    const { data }  = useMovie(movieId as string);
+    const { data }  = useMovie(movieid as string)
 
     return (
         <div className="h-screen w-screen bg-black">
@@ -31,7 +30,7 @@ const Watch = () => {
                     <span className="font-light">
                         Watching:
                     </span>
-                    {data?.title} Nikhil
+                    {data?.title}
                 </p>
 
             </nav>
@@ -41,7 +40,6 @@ const Watch = () => {
                 controls 
                 className="h-full w-full"
                 src={data?.videoUrl}>
-
             </video>
 
         </div>

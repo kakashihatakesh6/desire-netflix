@@ -64,6 +64,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
                 h-[12vw]
             "
             src={data.thumbnailUrl} alt="thumbnail" />
+            
             <div className="
                 z-20
                 bg-zinc-800
