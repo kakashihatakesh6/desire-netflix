@@ -38,7 +38,7 @@ const Auth = () => {
 
     const register = useCallback(async () => {
         try {
-            const newUser = await axios.post('/api/register', {
+            const newUser = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/register`, {
                 email,
                 name,
                 password
