@@ -34,6 +34,7 @@ export default async function handler(
         emailVerified: new Date(),
       },
     });
+    console.log("API =>", user)
 
     return res.status(200).json(user);
 
