@@ -44,7 +44,7 @@ const Auth = () => {
                 password
             });
             const res = newUser.data;
-            console.log("New User Created!", res);
+            console.log("New User Created! ", res);
             // setResStatus(true);
             
             login();
