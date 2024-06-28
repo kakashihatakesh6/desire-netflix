@@ -8,9 +8,9 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 
 const Auth = () => {
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('admin')
     const [name, setName] = useState('')
-    const [password, setPassword] = useState('')
+    const [password, setPassword] = useState('admin')
     const [error, setError] = useState<any>()
     const [resStaus, setResStatus] = useState(false)
 
@@ -70,6 +70,7 @@ const Auth = () => {
                     <div className="bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full">
                         <h2 className="text-white text-4xl mb-8 font-semibold">
                             {variant === 'login' ? 'Sign in' : 'Register'}
+                            <p className="text-sm text-white mt-2"><em>Email: </em> admin <em>Pasword:</em> admin</p>
                         </h2>
                         <div className="flex flex-col gap-4">
                             {variant === 'register' && (
