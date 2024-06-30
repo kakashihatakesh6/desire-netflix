@@ -28,6 +28,7 @@ const Auth = () => {
                 password,
                 redirect: true,
                 callbackUrl: '/profiles'
+                // callbackUrl: '/'
             });
 
         } catch (error) {
