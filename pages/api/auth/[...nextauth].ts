@@ -68,18 +68,18 @@ export default NextAuth({
     jwt: {
         secret: process.env.NEXTAUTH_JWT_SECRET,
     },
-    // Add secure cookies in production .
-    cookies: {
-        sessionToken: {
-            name: `next-auth.session-token`,
-            options: {
-                httpOnly: true,
-                sameSite: 'lax',
-                path: '/',
-                secure: process.env.NODE_ENV === 'production'
-            }
-        }
-    },
+    // // Add secure cookies in production .
+    // cookies: {
+    //     sessionToken: {
+    //         name: `next-auth.session-token`,
+    //         options: {
+    //             httpOnly: true,
+    //             sameSite: 'lax',
+    //             path: '/',
+    //             secure: process.env.NODE_ENV === 'production'
+    //         }
+    //     }
+    // },
     secret: process.env.NEXTAUTH_SECRET
 })
 // }
