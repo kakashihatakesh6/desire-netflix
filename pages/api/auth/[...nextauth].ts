@@ -1,11 +1,9 @@
-import NextAuth, { AuthOptions }  from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import prismadb from '@/lib/prismadb';
-import {compare} from 'bcrypt'
-
+import {compare} from 'bcrypt';
 import GithubProvider from 'next-auth/providers/github';
-import GoogleProvider from 'next-auth/providers/google'
-
+import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 export default NextAuth({
@@ -70,8 +68,19 @@ export default NextAuth({
     jwt: {
         secret: process.env.NEXTAUTH_JWT_SECRET,
     },
+    // Add secure cookies in production
+    cookies: {
+        sessionToken: {
+            name: `next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: process.env.NODE_ENV === 'production'
+            }
+        }
+    },
     secret: process.env.NEXTAUTH_SECRET
-
 })
 // }
 
