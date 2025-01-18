@@ -7,6 +7,7 @@ import useInfoModal from '@/hooks/useInfoModal';
 import useMovieList from '@/hooks/useMovieList';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -14,7 +15,6 @@ export async function getServerSideProps(context: NextPageContext) {
   if (!session) {
     return {
       redirect: {
-        // destination: '/auth',
         destination: '/auth',
         permanent: false,
       }
@@ -30,6 +30,8 @@ export default function Home() {
   const { data: movies = [] } = useMovieList();
   const { data: favorites = [] } = useFavorites();
   const {isOpen, closeModal} = useInfoModal();
+  const { data: session, status } = useSession();
+  console.log("session data =>", session, status)
  
   return (
     <>
