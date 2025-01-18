@@ -68,7 +68,7 @@ export default NextAuth({
     jwt: {
         secret: process.env.NEXTAUTH_JWT_SECRET,
     },
-    // Add secure cookies in production
+    // Add secure cookies in production .
     cookies: {
         sessionToken: {
             name: `next-auth.session-token`,
