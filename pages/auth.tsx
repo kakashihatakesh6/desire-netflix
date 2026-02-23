@@ -25,26 +25,17 @@ const Auth = () => {
 
     const login = useCallback(async () => {
         try {
-            const result = await signIn('credentials', {
+            await signIn('credentials', {
                 email,
                 password,
-                redirect: false,
+                redirect: true,
                 callbackUrl: '/profiles'
             });
-
-            if (result?.error) {
-                setError(result.error);
-                return;
-            }
-
-            if (result?.ok) {
-                router.push('/profiles');
-            }
 
         } catch (error) {
             console.log(error);
         }
-    }, [email, password, router])
+    }, [email, password])
 
 
     const register = useCallback(async () => {
@@ -114,10 +105,7 @@ const Auth = () => {
                         </button>
                         <div className="flex flex-row items-center gap-4 mt-8 justify-center">
                             <div
-                                onClick={async () => {
-                                    const result = await signIn('google', { redirect: false, callbackUrl: '/profiles' });
-                                    if (result?.ok) router.push('/profiles');
-                                }}
+                                onClick={() => signIn('google', { callbackUrl: '/profiles' })}
                                 className="
                                     w-10
                                     h-10
@@ -134,10 +122,7 @@ const Auth = () => {
                             </div>
 
                             <div
-                                onClick={async () => {
-                                    const result = await signIn('github', { redirect: false, callbackUrl: '/profiles' });
-                                    if (result?.ok) router.push('/profiles');
-                                }}
+                                onClick={() => signIn('github', { callbackUrl: '/profiles' })}
                                 className="
                                     w-10
                                     h-10

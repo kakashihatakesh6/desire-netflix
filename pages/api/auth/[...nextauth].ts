@@ -85,9 +85,6 @@ export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
   },
-  jwt: {
-    secret: process.env.NEXTAUTH_JWT_SECRET,
-  },
   callbacks: {
     async jwt({ token, user }): Promise<ExtendedToken> {
       if (user) {
@@ -123,6 +120,8 @@ export const authOptions: AuthOptions = {
           console.error("[NextAuth] session callback error:", error);
         }
       }
+
+      // If we can't find the user by ID, try to return basic session info as a fallback
       return session as ExtendedSession;
     },
   },

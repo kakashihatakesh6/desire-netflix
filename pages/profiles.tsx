@@ -6,8 +6,9 @@ import { useState } from "react";
 
 export async function getServerSideProps(context: NextPageContext) {
     const session = await getSession(context);
-    console.log("Session from profile =>",session);
+
     if (!session) {
+        console.log("[profiles] No session, redirecting to /auth");
         return {
             redirect: {
                 destination: '/auth',
@@ -37,7 +38,7 @@ const Profiles = () => {
                         border-transparent group-hover:cursor-pointer
                         group-hover:border-white overflow-hidden
                         ">
-                                <img src={user?.image !== '' ? user?.image : '/images/default-blue.png' } alt="profile" />
+                                <img src={user?.image !== '' ? user?.image : '/images/default-blue.png'} alt="profile" />
                             </div>
                             <div className="
                             mt-4
