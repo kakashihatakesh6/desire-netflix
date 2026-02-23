@@ -3,6 +3,7 @@ import Input from "@/components/input";
 import axios from "axios";
 import { useCallback, useState } from "react";
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
@@ -15,6 +16,7 @@ const Auth = () => {
     const [resStaus, setResStatus] = useState(false)
 
     const [variant, setVariant] = useState('login');
+    const router = useRouter();
 
     const toggleVariant = useCallback(() => {
         setVariant((currentVariant) => currentVariant === 'login' ? 'register' : 'login')
@@ -23,17 +25,26 @@ const Auth = () => {
 
     const login = useCallback(async () => {
         try {
-            await signIn('credentials', {
+            const result = await signIn('credentials', {
                 email,
                 password,
-                redirect: true,
+                redirect: false,
                 callbackUrl: '/profiles'
             });
+
+            if (result?.error) {
+                setError(result.error);
+                return;
+            }
+
+            if (result?.ok) {
+                router.push('/profiles');
+            }
 
         } catch (error) {
             console.log(error);
         }
-    }, [email, password])
+    }, [email, password, router])
 
 
     const register = useCallback(async () => {
@@ -46,7 +57,7 @@ const Auth = () => {
             const res = newUser.data;
             console.log("New User Created!");
             // setResStatus(true);
-            
+
             login();
 
         } catch (error) {
@@ -103,7 +114,10 @@ const Auth = () => {
                         </button>
                         <div className="flex flex-row items-center gap-4 mt-8 justify-center">
                             <div
-                                onClick={() => signIn('google', { callbackUrl: '/profiles' })}
+                                onClick={async () => {
+                                    const result = await signIn('google', { redirect: false, callbackUrl: '/profiles' });
+                                    if (result?.ok) router.push('/profiles');
+                                }}
                                 className="
                                     w-10
                                     h-10
@@ -120,7 +134,10 @@ const Auth = () => {
                             </div>
 
                             <div
-                                onClick={() => signIn('github', { callbackUrl: '/profiles' })}
+                                onClick={async () => {
+                                    const result = await signIn('github', { redirect: false, callbackUrl: '/profiles' });
+                                    if (result?.ok) router.push('/profiles');
+                                }}
                                 className="
                                     w-10
                                     h-10
