@@ -2,10 +2,11 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export async function getServerSideProps(context: NextPageContext) {
     const session = await getSession(context);
-
+    console.log("Session from profile =>",session);
     if (!session) {
         return {
             redirect: {
@@ -23,6 +24,8 @@ export async function getServerSideProps(context: NextPageContext) {
 const Profiles = () => {
     const router = useRouter();
     const { data: user } = useCurrentUser();
+    const [MyImage, setMyImage] = useState();
+    console.log(user)
     return (
         <div className="flex items-center h-full justify-center">
             <div className="flex flex-col">
@@ -34,7 +37,7 @@ const Profiles = () => {
                         border-transparent group-hover:cursor-pointer
                         group-hover:border-white overflow-hidden
                         ">
-                                <img src="/images/default-blue.png" alt="profile" />
+                                <img src={user?.image !== '' ? user?.image : '/images/default-blue.png' } alt="profile" />
                             </div>
                             <div className="
                             mt-4

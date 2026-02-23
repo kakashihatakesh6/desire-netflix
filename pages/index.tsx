@@ -6,7 +6,9 @@ import useFavorites from '@/hooks/useFavorites';
 import useInfoModal from '@/hooks/useInfoModal';
 import useMovieList from '@/hooks/useMovieList';
 import { NextPageContext } from 'next';
-import { getSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -23,16 +25,28 @@ export async function getServerSideProps(context: NextPageContext) {
   return {
     props: {}
   }
+
 }
 
 export default function Home() {
   const { data: movies = [] } = useMovieList();
   const { data: favorites = [] } = useFavorites();
-  const {isOpen, closeModal} = useInfoModal();
- 
+  const { isOpen, closeModal } = useInfoModal();
+
+  const session = useSession();
+  const router = useRouter();
+  console.log(session);
+
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push('/auth')
+  //   }
+  // }, [router, session])
+
+
   return (
     <>
-      <InfoModal visible={isOpen} onClose={closeModal}/>
+      <InfoModal visible={isOpen} onClose={closeModal} />
       <Navbar />
       <Billboard />
       <div className='pb-40'>

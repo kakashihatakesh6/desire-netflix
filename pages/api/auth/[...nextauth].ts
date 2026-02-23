@@ -33,9 +33,9 @@ export default NextAuth({
                 }
             },
             async authorize(credentials){
+
                 if (!credentials?.email || !credentials?.password) {
                     throw new Error("Email and Password required");
-                    
                 }
 
                 const user = await prismadb.user.findUnique({
@@ -76,3 +76,5 @@ export default NextAuth({
 // }
 
 // export default NextAuth(authOptins);
+
+

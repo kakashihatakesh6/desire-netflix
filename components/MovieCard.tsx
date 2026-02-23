@@ -30,11 +30,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
                 sm:group-hover:opacity-0
                 delay-300
                 w-full
-                h-[12vw]
+                h-[12vw]   
             '
             src={data.thumbnailUrl} alt="thumbnail" />
 
-            <div className='
+            <div className=' 
                 opacity-0
                 absolute
                 top-0
@@ -96,11 +96,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
                         <BsFillPlayFill size={30} />
                     </div>
 
-                    <FavoriteButton movieId={data?.id}/>
+                    <FavoriteButton movieId={data?.id} />
                     <div onClick={() => openModal(data?.id)}
                      className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">
                         <BiChevronDown size={30} className='text-white group-hover/item:text-neutral-300' />
                     </div>
+                    
                 </div>
 
                 <p className='text-green-400 font-semibold mt-4'>
@@ -114,7 +115,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
                 <div className='flex flex-row mt-4 gap-2 items-center'>
                     <p className="text-white text-[10px] lg:text-sm">{data.genre}</p>
                 </div>
-
 
 
             </div>
