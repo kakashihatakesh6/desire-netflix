@@ -13,10 +13,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const movies = await prismadb.movie.findMany();
 
-        return res.status(200).json(movies);
+        res.status(200).json(movies);
+        return;
 
     } catch (error) {
         console.log(error);
-        return res.status(400).end()
+        res.status(400).end();
+        return;
     }
 }

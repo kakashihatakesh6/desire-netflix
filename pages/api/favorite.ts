@@ -36,7 +36,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
             });
 
-            return res.status(200).json(user);
+            res.status(200).json(user);
+            return;
         }
 
         if (req.method === 'DELETE') {
@@ -65,10 +66,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
             });
 
-            return res.status(200).json(updatedUser);
+            res.status(200).json(updatedUser);
+            return;
         }
 
-        return res.status(405).end();
+        res.status(405).end();
+        return;
 
     } catch (error) {
         console.log(error);

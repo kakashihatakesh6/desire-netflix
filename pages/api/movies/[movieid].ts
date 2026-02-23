@@ -32,10 +32,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             throw new Error("Invalid ID");
         }
 
-        return res.status(200).json(movie);
+        res.status(200).json(movie);
+        return;
 
     } catch (error) {
         console.log(error);
-        return res.status(400).end()
+        res.status(400).end();
+        return;
     }
 }
